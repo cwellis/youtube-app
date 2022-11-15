@@ -141,17 +141,17 @@ const Video = () => {
   }, [path, dispatch])
 
   const handleLike = async () => {
-    await axios.put(`/users/like/${currentVideo._id}`)
-    dispatch(like(currentUser._id))
+    await axios.put(`/users/like/${currentVideo?._id}`)
+    dispatch(like(currentUser?._id))
   }
 
   const handleDislike = async () => {
-    await axios.put(`/users/dislike/${currentVideo._id}`)
-    dispatch(dislike(currentUser._id))
+    await axios.put(`/users/dislike/${currentVideo?._id}`)
+    dispatch(dislike(currentUser?._id))
   }
 
   const handleSub = async () => {
-    currentUser.subscribedUsers.includes(channel._id)
+    currentUser?.subscribedUsers.includes(channel._id)
     ? await axios.put(`/users/unsub/${channel._id}`)
     : await axios.put(`/users/sub/${channel._id}`);
 
@@ -163,24 +163,24 @@ const Video = () => {
       <Content>
         <VideoWrapper>
           <VideoFrame 
-            src={currentVideo.videoUrl} 
+            src={currentVideo?.videoUrl} 
             controls
           />
         </VideoWrapper>
-        <Title>{currentVideo.title}</Title>
+        <Title>{currentVideo?.title}</Title>
         <Details>
-          <Info>{currentVideo.views} views • {format(currentVideo.createdAt)}</Info>
+          <Info>{currentVideo?.views} views • {format(currentVideo?.createdAt)}</Info>
           <Buttons>
             <Button onClick={handleLike}>
-              {currentVideo.likes?.includes(currentUser._id) ? (
+              {currentVideo?.likes?.includes(currentUser?._id) ? (
                 <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
-              {currentVideo.likes?.length}
+              {currentVideo?.likes?.length}
             </Button>
             <Button onClick={handleDislike}>
-              {currentVideo.dislikes?.includes(currentUser._id) ? (
+              {currentVideo?.dislikes?.includes(currentUser?._id) ? (
                 <ThumbDownIcon />
               ) : (
                 <ThumbDownOffAltOutlinedIcon />
@@ -203,21 +203,21 @@ const Video = () => {
               <ChannelName>{channel.name}</ChannelName>
               <ChannelCounter>{channel.subscribers} subscribers</ChannelCounter>
               <Description>
-                {currentVideo.desc}
+                {currentVideo?.desc}
               </Description>
             </ChannelDetail>
           </ChannelInfo>
           <Subscribe onClick={handleSub}>
-            {currentUser.subscribedUsers?.includes(channel._id) 
+            {currentUser?.subscribedUsers?.includes(channel._id) 
             ? "UNSUBSCRIBE" 
             : "SUBSCRIBE"}
           </Subscribe>
         </Channel>
         <Hr />
-        <Comments videoId={currentVideo._id} />
+        <Comments videoId={currentVideo?._id} />
       </Content>
       <Recommendation 
-        tags={currentVideo.tags} 
+        tags={currentVideo?.tags} 
       />
     </Container>
   );
