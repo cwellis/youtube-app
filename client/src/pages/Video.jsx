@@ -4,11 +4,16 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import ThumbDownOffAltOutlinedIcon from "@mui/icons-material/ThumbDownOffAltOutlined";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import AddTaskOutlinedIcon from "@mui/icons-material/AddTaskOutlined";
+import ThumbDownIcon from "@mui/icons-material/ThumbDown";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import Comments from "../components/Comments";
 import Card from "../components/Card";
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
-import axios from 'axios'
+import axios from "axios";
+import { dislike, fetchSuccess, like } from "../redux/videoSlice";
+import { format } from "timeago.js";
+import { subscription } from "../redux/userSlice";
 import Recommendation from "../components/Recommendation";
 
 const Container = styled.div`
@@ -105,7 +110,7 @@ const Subscribe = styled.button`
   cursor: pointer;
 `;
 
-const VideoFrame = style.video`
+const VideoFrame = styled.video`
   max-height: 720px;
   width: 100%;
   object-fit: cover;
@@ -168,7 +173,7 @@ const Video = () => {
           <Buttons>
             <Button onClick={handleLike}>
               {currentVideo.likes?.includes(currentUser._id) ? (
-                <ThumnUpIcon />
+                <ThumbUpIcon />
               ) : (
                 <ThumbUpOutlinedIcon />
               )}{" "}
@@ -209,7 +214,7 @@ const Video = () => {
           </Subscribe>
         </Channel>
         <Hr />
-        <Comments videoId={currentVideo._id/>
+        <Comments videoId={currentVideo._id} />
       </Content>
       <Recommendation 
         tags={currentVideo.tags} 

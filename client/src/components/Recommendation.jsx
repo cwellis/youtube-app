@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
+import Card from './Card'
 
 const Container = styled.div`
     flex: 2;

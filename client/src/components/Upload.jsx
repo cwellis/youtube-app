@@ -1,9 +1,10 @@
 import React from 'react'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components'
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
 import app from '../firebase'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 const Container = styled.div`
   width: 100%;
@@ -90,7 +91,8 @@ const Upload = ({setOpen}) => {
     const uploadFile = (file, urlType) => {
         const storage = getStorage(app)
         const fileName = new Date().getTime() + file.name
-        const storageRef = ref(storage, file.name)
+        const storageRef = ref(storage, fileName)
+        const uploadTask = uploadBytesResumable(storageRef, file);
 
         uploadTask.on(
             "state_changed",
