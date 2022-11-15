@@ -6,6 +6,9 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import Upload from "./Upload";
+import { logout } from "../redux/userSlice";
+import { useDispatch } from 'react-redux'
+
 
 const Container = styled.div`
   position: sticky;
@@ -74,9 +77,20 @@ const Avatar = styled.img`
 const Navbar = () => {
 
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const [open, setOpen] = useState(false)
   const [q, setQ] = useState("")
   const {currentUser} = useSelector(state=>state.user)
+  
+
+  const handleLogout = () => {
+    try {
+      dispatch(logout())
+      navigate(`/signin`)
+    } catch (err) {
+      console.log(err)
+  }
+  }
 
   return (
     <>
@@ -99,6 +113,9 @@ const Navbar = () => {
               />
               <Avatar src={currentUser.img} />
               {currentUser.name}
+              <div onClick={handleLogout}>
+                Signout
+              </div>
             </User>
           ) : (
           <Link to="signin" style={{ textDecoration: "none" }}>
